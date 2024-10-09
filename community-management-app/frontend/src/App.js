@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from './pages/Homepage';
 import ChooseUser from './pages/ChooseUser';
 import LoginPage from './pages/LoginPage';
+import AdminRegisterPage from './pages/admin/AdminRegisterPage';
 
 const App = () => {
 
@@ -18,6 +19,8 @@ const App = () => {
         <Route path="/Adminlogin" element={<LoginPage role="Admin" />} />
         <Route path="/Frontdesklogin" element={<LoginPage role="Frontdesk" />} />
         <Route path="/Financelogin" element={<LoginPage role="Finance" />} />
+
+        <Route path="/Adminregister" element={<AdminRegisterPage />} />
 
       </Routes>}
     </Router>

@@ -80,9 +80,11 @@ const Overlay = styled.div`
 
 const StyledPaper = styled.div`
   padding: 24px;
-  background: rgba(200, 200, 200, 0.5); /* Increased transparency */
+  /* background: "rgba(200, 200, 200, 0.8)"; */
+  /* background: rgba(200, 200, 200, 0.8); */
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  */
   margin-top: 20px; /* Space between the header and the paper */
   max-height: 80vh; /* Optional: Limit the height to prevent overflow */
   overflow: auto; /* Optional: Add scroll if content exceeds max-height */

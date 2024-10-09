@@ -59,36 +59,18 @@ export const PurpleButton = styled(Button)`
   }
 `;
 
-export const LightGreenButton = styled(Button)`
+export const LightBlueButton = styled(Button)`
   && {
-    background-color: #00796b;
+    background-color: #1a5276;
     margin-bottom: 1rem;
     color: #fff;
     &:hover {
-      background-color: #0b5345;
+      background-color: #2980b9;
     }
   }
 `;
 
-// export const LightBlueButton = styled.button`
-//   background-color: #4fc3f7;
-//   color: #ffffff;
-//   border: 2px solid #00796b;
-//   border-radius: 8px;
-//   padding: 10px 20px;
-//   font-size: 16px;
-//   font-weight: bold;
-//   cursor: pointer;
-//   transition: background-color 0.3s ease;
 
-//   &:hover {
-//     background-color: #00796b;
-//   }
-
-//   &:focus {
-//     outline: none;
-//   }
-// `;
 
 // Create the styled button with shadow and animations
 export const LoginButton = styled.button`

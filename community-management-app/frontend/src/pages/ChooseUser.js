@@ -99,14 +99,16 @@ const StyledContainer = styled.div`
 const StyledPaper = styled(Paper)`
   padding: 40px; /* Increased padding for more space */
   text-align: center;
-  background-color: rgba(0, 121, 107, 0.9); /* Make the background color transparent */
+  background-color: rgba(26, 82, 118, 0.9);      //Blue
+  /* background-color: rgba(0, 121, 107, 0.9); Green Color */
   cursor: pointer;
   width: 100%;
   max-width: 500px; /* Increased max-width for a larger card */
   transition: transform 0.8s ease-in; /* Change to ease-in for smoother transition */
 
   &:hover {
-    background-color: rgba(0, 121, 107, 0.9); /* Adjust hover effect to be slightly less transparent */
+    background-color: rgba(26, 82, 118, 0.9); 
+    /* background-color: rgba(0, 121, 107, 0.9);   Green */
     color: black; /* Changed color for better contrast on hover */
     transform: scale(1.05); /* Zoom in effect */
   }
