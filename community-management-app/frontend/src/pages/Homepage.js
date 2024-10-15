@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import LOGO from "../assets/Logo2.png";
 import community from "../assets/community8.jpg";  // Your background image
 import { LoginButton } from '../components/buttonStyles';
+// import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
     return (

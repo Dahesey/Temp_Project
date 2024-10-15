@@ -1,5 +1,5 @@
 import React from "react";
-// import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ChooseUser from "./pages/ChooseUser";
@@ -10,7 +10,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 // import AdminProfile from "./pages/admin/AdminProfile3";
 
 const App = () => {
-  // const { currentRole } = useSelector((state) => state.user);
+  //const { currentRole } = useSelector((state) => state.user);
 
   const currentRole = "Admin";
 

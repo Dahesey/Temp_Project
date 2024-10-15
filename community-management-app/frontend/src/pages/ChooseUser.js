@@ -20,14 +20,8 @@ const ChooseUser = () => {
 
   const { currentRole } = useSelector(state => state.user);;
 
-  const navigateHandler = (user) => {
-    if (user === "Admin") {
-      navigate('/Adminlogin');
-    } else if (user === "Frontdesk") {
-      navigate('/Frontdesklogin');
-    } else if (user === "Finance") {
-      navigate('/Financelogin');
-    }
+  const handleRoleSelect = (role) => {
+    navigate(`/${role}login`);
   };
 
   
@@ -38,7 +32,6 @@ const ChooseUser = () => {
   }, [currentRole, navigate]);
 
 
-
   return (
     <StyledBackground>
       <StyledContainer>
@@ -46,7 +39,7 @@ const ChooseUser = () => {
         <Logo src={LOGO} alt="Logo" />
           <Grid container spacing={12} justifyContent="center"> {/* Increased spacing here */}
             <Grid item xs={12} sm={6} md={4}>
-              <div onClick={() => navigateHandler("Admin")}>
+              <div onClick={() => handleRoleSelect('Admin')}>
                 <StyledPaper elevation={3}>
                   <Box mb={2}>
                     <AccountCircle fontSize="large" />
@@ -59,7 +52,7 @@ const ChooseUser = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <div onClick={() => navigateHandler("Frontdesk")}>
+              <div onClick={() => handleRoleSelect('Frontdesk')}>
                 <StyledPaper elevation={3}>
                   <Box mb={2}>
                     <AccountCircle fontSize="large" />
@@ -72,7 +65,7 @@ const ChooseUser = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <div onClick={() => navigateHandler("Finance")}>
+              <div onClick={() => handleRoleSelect('Finance')}>
                 <StyledPaper elevation={3}>
                   <Box mb={2}>
                     <AccountCircle fontSize="large" />
