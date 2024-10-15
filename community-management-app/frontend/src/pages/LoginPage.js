@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Grid,
   Box,
@@ -22,27 +22,20 @@ import { useEffect, useState } from "react";
 
 const defaultTheme = createTheme();
 
-
-const LoginPage = ({ role }) => {
-
-
-
+const LoginPage = () => {
+  const { role } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentRole } = useSelector((state) => state.user);
-
-
-  
-  const handleLoginRedirect = () => {
-    const path = "/AdminDashboard"; // Replace with your actual path
-    navigate(path);
-  };
-
   const [toggle, setToggle] = useState(false);
   const [loader, setLoader] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [frontdeskNameError, setFrontdeskNameError] = useState(false);
+
+  const handleLoginRedirect = () => {
+    navigate(`/${role}Dashboard`); // Navigate on click to the selected role's dashboard
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -89,6 +82,7 @@ const LoginPage = ({ role }) => {
         dispatch({ type: 'LOGIN_SUCCESS', payload: data });
         // Optionally store token or user info in local storage
         localStorage.setItem('token', data.token);
+        handleLoginRedirect();
       } else {
         // Show error message to the user
         console.error(data.message);
@@ -234,7 +228,6 @@ const LoginPage = ({ role }) => {
                 <StyledLink href="#">Forgot password?</StyledLink>
               </Grid>
               <LightBlueButton
-               onClick={handleLoginRedirect} // Navigate on click
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -247,9 +240,11 @@ const LoginPage = ({ role }) => {
                 )}
               </LightBlueButton>
               {role === "Admin" && (
-                <Grid container>
-                  <Grid>Don't have an account?</Grid>
-                  <Grid item sx={{ ml: 2 }}>
+                <Grid container sx={{ mt: 2 }}>
+                  <Grid item>
+                    Don't have an account?
+                  </Grid>
+                  <Grid item sx={{ ml: 1 }}>
                     <StyledLink to="/Adminregister">Sign up</StyledLink>
                   </Grid>
                 </Grid>
