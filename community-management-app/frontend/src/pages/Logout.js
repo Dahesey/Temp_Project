@@ -10,7 +10,7 @@ const Logout = () => {
     
     // Dummy user data for demonstration
     const dummyUserData = {
-      currentRole: "Admin", // or any other role
+      //currentRole: "Admin", // or any other role
       currentUser: {
         name: "John Doe",
         email: "john.doe@example.com",

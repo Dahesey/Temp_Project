@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Box } from '@mui/material';
 import styled from 'styled-components';
-import LOGO from "../assets/Logo2.png";
+import LOGO from "../assets/logo.svg";
 import community from "../assets/community8.jpg";  // Your background image
 import { LoginButton } from '../components/buttonStyles';
 
