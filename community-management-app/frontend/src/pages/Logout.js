@@ -1,92 +1,85 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Grid, Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import { authLogout } from '../redux/userRelated/userSlice';
 import styled from 'styled-components';
-import Students from "../assets/students.svg";
-import { LightPurpleButton } from '../components/buttonStyles';
 
-const Homepage = () => {
+const Logout = () => {
+    // Uncomment this line when you have the Redux setup
+    // const currentUser = useSelector(state => state.user.currentUser);
+    
+    // Dummy user data for demonstration
+    const dummyUserData = {
+      currentRole: "Admin", // or any other role
+      currentUser: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        avatarUrl: "/static/images/avatar/1.jpg", // Optional: path to the user's avatar
+      },
+    };
+
+    const navigate = useNavigate();
+    // const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        // Uncomment this line when you have the Redux setup
+        // dispatch(authLogout());
+        navigate('/');
+    };
+
+    const handleCancel = () => {
+        navigate(-1);
+    };
+
     return (
-        <StyledContainer>
-            <Grid container spacing={0}>
-                <Grid item xs={12} md={6}>
-                    <img src={Students} alt="students" style={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <StyledPaper elevation={3}>
-                        <StyledTitle>
-                        Welcome to CoDi
-                            <br />
-                            Church Management 
-                            <br />
-                            System
-                        </StyledTitle>
-                        <StyledText>
-                        Effortlessly manage attendance and financial transactions for your community or organization. 
-                        Our app centralizes data, providing valuable insights to streamline decision-making and optimize resource allocation. 
-                        Track attendance, oversee donations, and make informed decisions with powerful, real-time insights
-                        </StyledText>
-                        <StyledBox>
-                            <StyledLink to="/choose">
-                                <LightPurpleButton variant="contained" fullWidth>
-                                    Login
-                                </LightPurpleButton>
-                            </StyledLink>
-                            <StyledText>
-                                Don't have an account?{' '}
-                                <Link to="/Adminregister" style={{color:"#550080"}}>
-                                    Sign up
-                                </Link>
-                            </StyledText>
-                        </StyledBox>
-                    </StyledPaper>
-                </Grid>
-            </Grid>
-        </StyledContainer>
+        <LogoutContainer>
+            <h1>{dummyUserData.currentUser.name}</h1>
+            <LogoutMessage>Are you sure you want to log out?</LogoutMessage>
+            <LogoutButtonLogout onClick={handleLogout}>Log Out</LogoutButtonLogout>
+            <LogoutButtonCancel onClick={handleCancel}>Cancel</LogoutButtonCancel>
+        </LogoutContainer>
     );
 };
 
-export default Homepage;
+export default Logout;
 
-const StyledContainer = styled(Container)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
-
-const StyledPaper = styled.div`
-  padding: 24px;
-  height: 100vh;
-`;
-
-const StyledBox = styled(Box)`
+const LogoutContainer = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content:center;
-  gap: 16px;
-  padding: 24px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  background-color: #85769f66;
+  color: black;
 `;
 
-const StyledTitle = styled.h1`
-  font-size: 3rem;
-  color: #252525;
-  /* font-family: "Manrope"; */
-  font-weight: bold;
-  padding-top: 0;
-  letter-spacing: normal;
-  line-height: normal;
+const LogoutMessage = styled.p`
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-align: center;
 `;
 
-const StyledText = styled.p`
-  /* color: #550080; */
-  margin-top: 30px;
-  margin-bottom: 30px; 
-  letter-spacing: normal;
-  line-height: normal;
+const LogoutButton = styled.button`
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+    background-color: #333;
+  }
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
+const LogoutButtonLogout = styled(LogoutButton)`
+  background-color: #ea0606;
+`;
+
+const LogoutButtonCancel = styled(LogoutButton)`
+  background-color: rgb(99, 60, 99);
 `;

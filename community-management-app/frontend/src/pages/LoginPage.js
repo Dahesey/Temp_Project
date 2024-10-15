@@ -22,39 +22,43 @@ import { useEffect, useState } from "react";
 
 const defaultTheme = createTheme();
 
+
 const LoginPage = ({ role }) => {
+
+
+
   const navigate = useNavigate();
-
-//   const navigateHandler = (buttonClicked) => {
-//     if (buttonClicked === "RegisterAdmin") {
-//       navigate("/Adminregister");
-//     }
-//   };
-
   const dispatch = useDispatch();
-
   const { currentRole } = useSelector((state) => state.user);
+
+
+  
+  const handleLoginRedirect = () => {
+    const path = "/AdminDashboard"; // Replace with your actual path
+    navigate(path);
+  };
 
   const [toggle, setToggle] = useState(false);
   const [loader, setLoader] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [frontdeskNameError, setfrontdeskNameError] = useState(false);
+  const [frontdeskNameError, setFrontdeskNameError] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    let fields;
+
     if (role === "Frontdesk") {
       const frontdeskName = event.target.frontdeskName.value;
       const password = event.target.password.value;
 
       if (!frontdeskName || !password) {
-        if (!frontdeskName) setfrontdeskNameError(true);
+        if (!frontdeskName) setFrontdeskNameError(true);
         if (!password) setPasswordError(true);
         return;
       }
-      const fields = { frontdeskName, password };
-      setLoader(true);
-      dispatch((fields, role));
+      fields = { frontdeskName, password };
     } else {
       const email = event.target.email.value;
       const password = event.target.password.value;
@@ -64,10 +68,37 @@ const LoginPage = ({ role }) => {
         if (!password) setPasswordError(true);
         return;
       }
+      fields = { email, password };
+    }
 
-      const fields = { email, password };
-      setLoader(true);
-      dispatch((fields, role));
+    setLoader(true);
+
+    try {
+      const response = await fetch('https://api.mock.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(fields),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Dispatch login success action with user data
+        dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+        // Optionally store token or user info in local storage
+        localStorage.setItem('token', data.token);
+      } else {
+        // Show error message to the user
+        console.error(data.message);
+        alert(data.message || "Login failed!"); // Simple alert for demonstration
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert("Login failed due to network error. Please try again."); // Show network error
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -75,16 +106,14 @@ const LoginPage = ({ role }) => {
     const { name } = event.target;
     if (name === "email") setEmailError(false);
     if (name === "password") setPasswordError(false);
-    if (name === "frontdeskName") setfrontdeskNameError(false);
+    if (name === "frontdeskName") setFrontdeskNameError(false);
   };
 
   useEffect(() => {
     if (currentRole === "Admin") {
-      navigate("/Admin/dashboard");
-    } else {
-      if (currentRole === "Frontdesk") {
-        navigate("/FrontDesK/dashboard");
-      }
+      navigate("/AdminDashboard");
+    } else if (currentRole === "Frontdesk") {
+      navigate("/Frontdesk/dashboard");
     }
   }, [currentRole, navigate]);
 
@@ -104,7 +133,6 @@ const LoginPage = ({ role }) => {
         }}
       >
         <CssBaseline />
-        {/* Centered Form */}
         <Grid
           item
           xs={12}
@@ -121,7 +149,7 @@ const LoginPage = ({ role }) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            background: "rgba(255, 255, 255, 0.8)", // Semi-transparent background
+            background: "rgba(255, 255, 255, 0.8)",
           }}
         >
           <Box
@@ -145,21 +173,19 @@ const LoginPage = ({ role }) => {
               sx={{ mt: 2, width: "100%" }}
             >
               {role === "Frontdesk" ? (
-                <>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="frontdeskName"
-                    label="Enter your name"
-                    name="frontdeskName"
-                    autoComplete="name"
-                    autoFocus
-                    error={frontdeskNameError}
-                    helperText={frontdeskNameError && "Name is required"}
-                    onChange={handleInputChange}
-                  />
-                </>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="frontdeskName"
+                  label="Enter your name"
+                  name="frontdeskName"
+                  autoComplete="name"
+                  autoFocus
+                  error={frontdeskNameError}
+                  helperText={frontdeskNameError && "Name is required"}
+                  onChange={handleInputChange}
+                />
               ) : (
                 <TextField
                   margin="normal"
@@ -208,6 +234,7 @@ const LoginPage = ({ role }) => {
                 <StyledLink href="#">Forgot password?</StyledLink>
               </Grid>
               <LightBlueButton
+               onClick={handleLoginRedirect} // Navigate on click
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -223,11 +250,7 @@ const LoginPage = ({ role }) => {
                 <Grid container>
                   <Grid>Don't have an account?</Grid>
                   <Grid item sx={{ ml: 2 }}>
-                    <StyledLink to="/Adminregister"   > 
-                
-                      
-                      Sign up
-                    </StyledLink>
+                    <StyledLink to="/Adminregister">Sign up</StyledLink>
                   </Grid>
                 </Grid>
               )}

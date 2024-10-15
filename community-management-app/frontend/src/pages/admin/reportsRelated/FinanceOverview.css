@@ -1,0 +1,27 @@
+.finance-overview {
+  max-width: 1000px; /* Increase the overall width */
+  margin: 0 auto;
+}
+
+.performance-chart {
+  max-width: 800px; /* Increase the width of the line chart */
+  height: 400px; /* Increase the height */
+  margin: 0 auto;
+}
+
+.pie-chart {
+  max-width: 400px; /* Increase the size of the pie chart */
+  height: 400px; /* Increase the height */
+  margin: 0 auto;
+}
+
+.transactions-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-section th, .transactions-section td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
 import {
   Grid,
   Paper,
@@ -10,10 +10,14 @@ import { AccountCircle } from '@mui/icons-material';
 import styled from 'styled-components';
 import BackgroundImage from '../assets/community8.jpg'; 
 import LOGO from "../assets/Logo2.png";
+import {  useSelector } from 'react-redux';
 
 
 const ChooseUser = () => {
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { currentRole } = useSelector(state => state.user);;
 
   const navigateHandler = (user) => {
     if (user === "Admin") {
@@ -24,6 +28,15 @@ const ChooseUser = () => {
       navigate('/Financelogin');
     }
   };
+
+  
+  useEffect(() => {
+    if (currentRole === 'Admin') {
+      navigate('/AdminDashboard');
+    }
+  }, [currentRole, navigate]);
+
+
 
   return (
     <StyledBackground>
