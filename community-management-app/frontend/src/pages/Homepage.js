@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Box } from '@mui/material';
 import styled from 'styled-components';
-import LOGO from "../assets/logo.svg";
+//import LOGO from "../assets/logo.svg";
 import community from "../assets/community8.jpg";  // Your background image
 import { LoginButton } from '../components/buttonStyles';
 
@@ -10,7 +10,7 @@ const Homepage = () => {
     return (
         <StyledContainer>
             <Overlay>
-                <Logo src={LOGO} alt="Logo" />
+                {/* <Logo src={LOGO} alt="Logo" /> */}
                 <Grid container spacing={0}>
                     <Grid item xs={12} md={6}>
                         {/* <img src={community} alt="image" style={{ width: '100%', borderRadius: '8px' }} /> */}
@@ -46,13 +46,13 @@ const Homepage = () => {
 
 export default Homepage;
 
-const Logo = styled.img`
-  position: absolute; 
-  top: 20px; 
-  left: 20px; 
-  width: 100px; 
-  height: auto; 
-`;
+// const Logo = styled.img`
+//   position: absolute; 
+//   top: 20px; 
+//   left: 20px; 
+//   width: 100px; 
+//   height: auto; 
+// `;
 
 const StyledContainer = styled.div`
   display: flex;
