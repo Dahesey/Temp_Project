@@ -9,7 +9,7 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 import styled from 'styled-components';
 import BackgroundImage from '../assets/community8.jpg'; 
-import LOGO from "../assets/logo.svg";
+//import LOGO from "../assets/logo.svg";
 import {  useSelector } from 'react-redux';
 
 
@@ -134,10 +134,10 @@ const StyledTypography = styled.h2`
 `;
 
 
-const Logo = styled.img`
-  position: absolute; 
-  top: 20px; 
-  left: 20px; 
-  width: 100px; 
-  height: auto; 
-`;
+// const Logo = styled.img`
+//   position: absolute; 
+//   top: 20px; 
+//   left: 20px; 
+//   width: 100px; 
+//   height: auto; 
+// `;
