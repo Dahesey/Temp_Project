@@ -9,7 +9,7 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 import styled from 'styled-components';
 import BackgroundImage from '../assets/community8.jpg'; 
-import LOGO from "../assets/Logo2.png";
+import LOGO from "../assets/logo.svg";
 import {  useSelector } from 'react-redux';
 
 
