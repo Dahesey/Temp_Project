@@ -19,6 +19,7 @@ import { LightBlueButton } from "../components/buttonStyles";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import userCredentials from "../userCredentials";
 
 const defaultTheme = createTheme();
 
@@ -43,57 +44,70 @@ const LoginPage = () => {
     let fields;
 
     if (role === "Frontdesk") {
-      const frontdeskName = event.target.frontdeskName.value;
-      const password = event.target.password.value;
-
-      if (!frontdeskName || !password) {
-        if (!frontdeskName) setFrontdeskNameError(true);
-        if (!password) setPasswordError(true);
-        return;
-      }
-      fields = { frontdeskName, password };
-    } else {
-      const email = event.target.email.value;
-      const password = event.target.password.value;
-
-      if (!email || !password) {
-        if (!email) setEmailError(true);
-        if (!password) setPasswordError(true);
-        return;
-      }
-      fields = { email, password };
-    }
-
-    setLoader(true);
-
-    try {
-      const response = await fetch('https://api.mock.com/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(fields),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Dispatch login success action with user data
-        dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-        // Optionally store token or user info in local storage
-        localStorage.setItem('token', data.token);
+      fields = { frontdeskName: event.target.frontdeskName.value, password: event.target.password.value };
+      // Check hardcoded credentials
+      if (
+        fields.frontdeskName === userCredentials.frontdesk.frontdeskName &&
+        fields.password === userCredentials.frontdesk.password
+      ) {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.frontdesk });
         handleLoginRedirect();
-      } else {
-        // Show error message to the user
-        console.error(data.message);
-        alert(data.message || "Login failed!"); // Simple alert for demonstration
+        return;
       }
-    } catch (error) {
-      console.error('Login failed:', error);
-      alert("Login failed due to network error. Please try again."); // Show network error
-    } finally {
-      setLoader(false);
+    } else {
+      fields = { email: event.target.email.value, password: event.target.password.value };
+      // Check hardcoded credentials
+      if (role === "Admin") {
+        if (
+          fields.email === userCredentials.admin.email &&
+          fields.password === userCredentials.admin.password
+        ) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.admin });
+          handleLoginRedirect();
+          return;
+        }
+      } else if (role === "Finance") {
+        if (
+          fields.email === userCredentials.finance.email &&
+          fields.password === userCredentials.finance.password
+        ) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.finance });
+          handleLoginRedirect();
+          return;
+        }
+      }
     }
+    
+    setLoader(true);
+    alert("Invalid credentials. Please try again.");
+    // try {
+    //   const response = await fetch('https://api.mock.com/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(fields),
+    //   });
+
+    //   const data = await response.json();
+
+    //   if (response.ok) {
+    //     // Dispatch login success action with user data
+    //     dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+    //     // Optionally store token or user info in local storage
+    //     localStorage.setItem('token', data.token);
+    //     handleLoginRedirect();
+    //   } else {
+    //     // Show error message to the user
+    //     console.error(data.message);
+    //     alert(data.message || "Login failed!"); // Simple alert for demonstration
+    //   }
+    // } catch (error) {
+    //   console.error('Login failed:', error);
+    //   alert("Login failed due to network error. Please try again."); // Show network error
+    // } finally {
+    //   setLoader(false);
+    // }
   };
 
   const handleInputChange = (event) => {
@@ -225,7 +239,10 @@ const LoginPage = () => {
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
-                <StyledLink href="#">Forgot password?</StyledLink>
+                <StyledLink to="#" onClick={() => alert("Password recovery not implemented.")}>
+                  Forgot password?
+                </StyledLink>
+
               </Grid>
               <LightBlueButton
                 type="submit"
@@ -233,11 +250,9 @@ const LoginPage = () => {
                 variant="contained"
                 sx={{ mt: 3 }}
               >
-                {loader ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  "Login"
-                )}
+                {loader ?
+                  <CircularProgress size={24} color="inherit" /> : "Login"
+                }
               </LightBlueButton>
               {role === "Admin" && (
                 <Grid container sx={{ mt: 2 }}>

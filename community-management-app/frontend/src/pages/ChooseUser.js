@@ -18,10 +18,10 @@ const ChooseUser = () => {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { currentRole } = useSelector(state => state.user);;
+  const { currentRole } = useSelector(state => state.user);
 
   const handleRoleSelect = (role) => {
-    navigate(`/${role}login`);
+    navigate(`/login/${role}`);
   };
 
   
