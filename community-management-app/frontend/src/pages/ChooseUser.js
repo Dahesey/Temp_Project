@@ -9,7 +9,7 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 import styled from 'styled-components';
 import BackgroundImage from '../assets/community8.jpg'; 
-//import LOGO from "../assets/logo.svg";
+// import LOGO from "../assets/Logo2.png";
 import {  useSelector } from 'react-redux';
 
 
@@ -18,16 +18,10 @@ const ChooseUser = () => {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { currentRole } = useSelector(state => state.user);;
+  const { currentRole } = useSelector(state => state.user);
 
-  const navigateHandler = (user) => {
-    if (user === "Admin") {
-      navigate('/Adminlogin');
-    } else if (user === "Frontdesk") {
-      navigate('/Frontdesklogin');
-    } else if (user === "Finance") {
-      navigate('/Financelogin');
-    }
+  const handleRoleSelect = (role) => {
+    navigate(`/login/${role}`);
   };
 
   
@@ -38,15 +32,14 @@ const ChooseUser = () => {
   }, [currentRole, navigate]);
 
 
-
   return (
     <StyledBackground>
       <StyledContainer>
         <Container>
-        <Logo src={LOGO} alt="Logo" />
+        {/* <Logo src={LOGO} alt="Logo" /> */}
           <Grid container spacing={12} justifyContent="center"> {/* Increased spacing here */}
             <Grid item xs={12} sm={6} md={4}>
-              <div onClick={() => navigateHandler("Admin")}>
+              <div onClick={() => handleRoleSelect('Admin')}>
                 <StyledPaper elevation={3}>
                   <Box mb={2}>
                     <AccountCircle fontSize="large" />
@@ -59,7 +52,7 @@ const ChooseUser = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <div onClick={() => navigateHandler("Frontdesk")}>
+              <div onClick={() => handleRoleSelect('Frontdesk')}>
                 <StyledPaper elevation={3}>
                   <Box mb={2}>
                     <AccountCircle fontSize="large" />
@@ -72,7 +65,7 @@ const ChooseUser = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <div onClick={() => navigateHandler("Finance")}>
+              <div onClick={() => handleRoleSelect('Finance')}>
                 <StyledPaper elevation={3}>
                   <Box mb={2}>
                     <AccountCircle fontSize="large" />
