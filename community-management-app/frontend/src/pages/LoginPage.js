@@ -19,7 +19,7 @@ import { LightBlueButton } from "../components/buttonStyles";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import userCredentials from "../userCredentials";
+//import userCredentials from "../userCredentials";
 
 const defaultTheme = createTheme();
 
@@ -41,45 +41,65 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    let fields;
+    const username = event.target.username.value;
+    const password = event.target.password.value;
 
-    if (role === "Frontdesk") {
-      fields = { frontdeskName: event.target.frontdeskName.value, password: event.target.password.value };
-      // Check hardcoded credentials
-      if (
-        fields.frontdeskName === userCredentials.frontdesk.frontdeskName &&
-        fields.password === userCredentials.frontdesk.password
-      ) {
-        dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.frontdesk });
+    const response = await fetch('http://localhost:8000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      if (data.role === role) {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: data });
         handleLoginRedirect();
-        return;
       }
-    } else {
-      fields = { email: event.target.email.value, password: event.target.password.value };
-      // Check hardcoded credentials
-      if (role === "Admin") {
-        if (
-          fields.email === userCredentials.admin.email &&
-          fields.password === userCredentials.admin.password
-        ) {
-          dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.admin });
-          handleLoginRedirect();
-          return;
-        }
-      } else if (role === "Finance") {
-        if (
-          fields.email === userCredentials.finance.email &&
-          fields.password === userCredentials.finance.password
-        ) {
-          dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.finance });
-          handleLoginRedirect();
-          return;
-        }
+      else {
+        alert(data.message);
       }
+    // .........................................................................up to here is from backend
+    // if (role === "Frontdesk") {
+    //   fields = { frontdeskName: event.target.frontdeskName.value, password: event.target.password.value };
+    //   // Check hardcoded credentials
+    //   if (
+    //     fields.frontdeskName === userCredentials.frontdesk.frontdeskName &&
+    //     fields.password === userCredentials.frontdesk.password
+    //   ) {
+    //     dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.frontdesk });
+    //     handleLoginRedirect();
+    //     return;
+    //   }
+    // } else {
+    //   fields = { email: event.target.email.value, password: event.target.password.value };
+    //   // Check hardcoded credentials
+    //   if (role === "Admin") {
+    //     if (
+    //       fields.email === userCredentials.admin.email &&
+    //       fields.password === userCredentials.admin.password
+    //     ) {
+    //       dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.admin });
+    //       handleLoginRedirect();
+    //       return;
+    //     }
+    //   } else if (role === "Finance") {
+    //     if (
+    //       fields.email === userCredentials.finance.email &&
+    //       fields.password === userCredentials.finance.password
+    //     ) {
+    //       dispatch({ type: 'LOGIN_SUCCESS', payload: userCredentials.finance });
+    //       handleLoginRedirect();
+    //       return;
+    //     }
+    //   }
     }
     
-    setLoader(true);
-    alert("Invalid credentials. Please try again.");
+    // setLoader(true);
+    // alert("Invalid credentials. Please try again.");
     // try {
     //   const response = await fetch('https://api.mock.com/login', {
     //     method: 'POST',
@@ -106,7 +126,7 @@ const LoginPage = () => {
     //   console.error('Login failed:', error);
     //   alert("Login failed due to network error. Please try again."); // Show network error
     // } finally {
-    //   setLoader(false);
+    // setLoader(false);
     // }
   };
 
@@ -271,7 +291,6 @@ const LoginPage = () => {
     </ThemeProvider>
   );
 };
-
 export default LoginPage;
 
 const StyledLink = styled(Link)`
